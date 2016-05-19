@@ -56,7 +56,9 @@ public class SbsManager implements SbsApi {
 			logger.info("Backup finished. status: {}", s);
 			backupDal.updateStatus(task.getId(), s ? BackupStatus.OK : BackupStatus.FAILED);
 
-			CompletableFuture.runAsync(this::startNewBackup);
+			if (!s) {
+				CompletableFuture.runAsync(this::startNewBackup);
+			}
 		});
 
 		return task.view();

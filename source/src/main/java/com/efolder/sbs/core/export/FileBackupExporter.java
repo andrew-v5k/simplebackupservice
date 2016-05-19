@@ -1,4 +1,4 @@
-package com.efolder.sbs.core.export.file;
+package com.efolder.sbs.core.export;
 
 import java.io.InputStream;
 import java.io.OutputStream;
