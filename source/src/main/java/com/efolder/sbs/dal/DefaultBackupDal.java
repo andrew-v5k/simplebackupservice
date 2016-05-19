@@ -16,7 +16,7 @@ import com.efolder.sbs.entities.BackupStatus;
 import com.efolder.sbs.entities.BackupTask;
 
 @Component
-public class DefaultBackupDal {
+public class DefaultBackupDal implements BackupDal {
 	@Autowired
 	private IdGenerator ids;
 	@Autowired
