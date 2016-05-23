@@ -7,6 +7,7 @@ import java.util.concurrent.Executor;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +46,8 @@ public class SbsManager implements SbsApi {
 
 		CompletableFuture.supplyAsync(() -> {
 			HttpGet request = new HttpGet(url(REQUEST_USERS));
-			try (CloseableHttpResponse response = HttpClientBuilder.create().build().execute(request)) {
+			CloseableHttpClient client = getClient();
+			try (CloseableHttpResponse response = client.execute(request)) {
 				processor.process(task, response.getEntity().getContent());
 			} catch (Exception e) {
 				logger.warn("Can't parse response for backup: {}", task.getId(), e);
@@ -67,6 +69,10 @@ public class SbsManager implements SbsApi {
 	@Override
 	public List<BackupDto> listBackups() {
 		return backupDal.list();
+	}
+
+	public CloseableHttpClient getClient() {
+		return HttpClientBuilder.create().build();
 	}
 
 	private String url(String request) {

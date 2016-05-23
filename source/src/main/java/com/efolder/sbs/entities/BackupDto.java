@@ -2,6 +2,10 @@ package com.efolder.sbs.entities;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class BackupDto {
 	private String id;
 	private Date date;
@@ -41,7 +45,17 @@ public class BackupDto {
 	}
 
 	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		return EqualsBuilder.reflectionEquals(this, other);
+	}
+
+	@Override
 	public String toString() {
-		return "BackupDto [id=" + id + ", date=" + date + ", status=" + status + "]";
+		return ToStringBuilder.reflectionToString(this);
 	}
 }
